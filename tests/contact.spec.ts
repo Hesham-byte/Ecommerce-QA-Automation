@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/base';
 import { ContactPage } from '../pages/ContactPage';
 import { uniqueEmail } from '../data/test-data';
 import { HomePage } from '../pages/HomePage';

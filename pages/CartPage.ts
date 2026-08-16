@@ -47,7 +47,17 @@ export class CartPage {
 
   async removeProduct(name: string): Promise<void> {
     const row = await this.getProductRow(name);
-    await row.locator('a.cart_quantity_delete').click();
+    const deleteLink = row.locator('a.cart_quantity_delete');
+    for (let attempt = 0; attempt < 3; attempt++) {
+      await deleteLink.click();
+      try {
+        await expect(row).toBeHidden({ timeout: 5000 });
+        return;
+      } catch {
+        /* Delete request may have been dropped; retry. */
+      }
+    }
+    throw new Error(`Failed to remove "${name}" from the cart after 3 attempts.`);
   }
 
   async isCartEmpty(): Promise<boolean> {

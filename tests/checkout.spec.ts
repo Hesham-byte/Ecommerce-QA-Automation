@@ -31,8 +31,6 @@ test.describe('Checkout', () => {
     await checkoutPage.fillPaymentDetails(validCard);
     await checkoutPage.payAndConfirmOrder();
     await checkoutPage.expectOrderPlaced();
-
-    await expect(page.getByRole('heading', { name: 'Order Placed!' })).toBeVisible();
   });
 
   test('should verify delivery and billing addresses on checkout', async ({ page, account }) => {

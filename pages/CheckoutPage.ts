@@ -12,7 +12,6 @@ export class CheckoutPage {
   readonly expiryMonthInput: Locator;
   readonly expiryYearInput: Locator;
   readonly payButton: Locator;
-  readonly orderSuccessMessage: Locator;
   readonly orderPlacedHeading: Locator;
   readonly continueButton: Locator;
 
@@ -28,7 +27,6 @@ export class CheckoutPage {
     this.expiryMonthInput = page.locator('[data-qa="expiry-month"]');
     this.expiryYearInput = page.locator('[data-qa="expiry-year"]');
     this.payButton = page.locator('[data-qa="pay-button"]');
-    this.orderSuccessMessage = page.locator('#success_message');
     this.orderPlacedHeading = page.getByRole('heading', { name: 'Order Placed!' });
     this.continueButton = page.getByRole('link', { name: 'Continue' });
   }
@@ -69,6 +67,7 @@ export class CheckoutPage {
   }
 
   async expectOrderPlaced(): Promise<void> {
-    await expect(this.orderSuccessMessage).toContainText('Your order has been placed successfully!');
+    await expect(this.page).toHaveURL(/\/payment_done\//);
+    await expect(this.orderPlacedHeading).toBeVisible();
   }
 }
